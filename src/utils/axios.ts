@@ -2,8 +2,8 @@ import axios from "axios"
 
 let http = axios.create({
     baseURL: process.env.NODE_ENV === "production" ?
-        "http://tiktok.nicode.top:20005/api/" :
-        "http://tiktok.nicode.top:20005/api/",
+        "https://tiktok.nicode.top:20005/api/" :
+        "http://localhost:8000/api/",
     withCredentials: false,
     timeout: 8000,
 })

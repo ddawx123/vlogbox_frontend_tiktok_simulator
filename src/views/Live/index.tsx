@@ -31,6 +31,7 @@ class LivePage extends React.Component<Props, States> {
             this.setState({lives})
         } catch (error) {
             console.error(error)
+            alert('e');
             this.setState({lives: []})
         }
     }

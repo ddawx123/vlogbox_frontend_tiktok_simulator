@@ -2,7 +2,7 @@ import axios from "../utils/axios"
 import {VideosListParams} from "../types/video";
 
 export const videos_list = (params: VideosListParams = {}) => {
-    return axios.get('/video/list', params)
+    return axios.get('/video/feed_list', params)
 }
 
 export const video_like = (id: string) => {

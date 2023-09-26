@@ -14,22 +14,22 @@ interface Props {
 }
 
 interface States {
-    videos: Array<VideoInfo>,
+    videos: Array<VideoInfo>
 }
 
 class VideoPage extends React.Component<Props, States> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            videos: [],
+            videos: []
         };
         this.handleLazyLoading = this.handleLazyLoading.bind(this);
     }
 
     async componentDidMount() {
         try {
-            let response = await videos_list({limit: PAGE_LIMIT, offset:0});
-            const videos: Array<VideoInfo> = response.data.videos;
+            let response = await videos_list({limit: PAGE_LIMIT, offset:1});
+            const videos: Array<VideoInfo> = response.data.data.items;
             this.setState({videos})
         } catch (error) {
             console.error(error)
@@ -42,7 +42,7 @@ class VideoPage extends React.Component<Props, States> {
             try {
                 const offset = this.state.videos.length
                 let response = await videos_list({limit: PAGE_LIMIT, offset: offset});
-                let videos:Array<VideoInfo> = response.data.videos;
+                let videos:Array<VideoInfo> = response.data.data.items;
                 videos = this.state.videos.concat(videos)
                 this.setState({
                     videos
