@@ -127,7 +127,8 @@ function Video({videoInfo, onLazyLoading, index}: Props): JSX.Element {
                 className="video-player"
                 loop
                 playsInline
-                webkit-playsinline={"true"}
+                autoPlay={true}
+                muted={true}
                 onClick={onVideoPress}
                 ref={videoRef}
                 src={videoInfo.videoUrl}

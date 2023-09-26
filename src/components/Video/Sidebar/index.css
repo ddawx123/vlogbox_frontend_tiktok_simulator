@@ -26,7 +26,6 @@
 }
 
 .video-sidebar-record {
-    animation: record-spin infinite 5s linear;
     height: 50px;
     filter: invert(1);
 }

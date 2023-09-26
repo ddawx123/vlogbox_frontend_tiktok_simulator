@@ -15,7 +15,7 @@ interface States {
     lives: Array<LiveInfo>
 }
 
-const PAGE_LIMIT = 3
+const PAGE_LIMIT = 3;
 
 class LivePage extends React.Component<Props, States> {
     constructor(props: Props) {
@@ -31,7 +31,7 @@ class LivePage extends React.Component<Props, States> {
             this.setState({lives})
         } catch (error) {
             console.error(error)
-            alert('e');
+            alert('直播服务暂不可用');
             this.setState({lives: []})
         }
     }

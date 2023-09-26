@@ -14,21 +14,28 @@ interface Props {
 }
 
 interface States {
-    videos: Array<VideoInfo>
+    videos: Array<VideoInfo>,
+    offset: number,
+    has_more: boolean
 }
 
 class VideoPage extends React.Component<Props, States> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            videos: []
+            videos: [],
+            offset: 1,
+            has_more: true
         };
         this.handleLazyLoading = this.handleLazyLoading.bind(this);
     }
 
     async componentDidMount() {
         try {
-            let response = await videos_list({limit: PAGE_LIMIT, offset:1});
+            let response = await videos_list({
+                limit: PAGE_LIMIT,
+                offset: this.state.offset
+            });
             const videos: Array<VideoInfo> = response.data.data.items;
             this.setState({videos})
         } catch (error) {
@@ -38,15 +45,22 @@ class VideoPage extends React.Component<Props, States> {
     }
 
     async handleLazyLoading(index: number) {
-        if ((index + 2) === this.state.videos.length) {
+        if ((index + 2) === this.state.videos.length && this.state.has_more) {
             try {
-                const offset = this.state.videos.length
-                let response = await videos_list({limit: PAGE_LIMIT, offset: offset});
-                let videos:Array<VideoInfo> = response.data.data.items;
-                videos = this.state.videos.concat(videos)
-                this.setState({
-                    videos
-                });
+                const nextOffset = this.state.offset + 1;
+                let response = await videos_list({limit: PAGE_LIMIT, offset: nextOffset});
+                if (response.data.data.prefetch_url !== null) {
+                    this.setState({ offset: nextOffset });
+                } else {
+                    this.setState({ has_more: false });
+                }
+                let video_list: Array<VideoInfo> = response.data.data.items;
+                if (video_list.length > 0) {
+                    video_list = this.state.videos.concat(video_list);
+                    this.setState({
+                        videos: video_list
+                    });
+                }
             } catch (err) {
                 console.error(err)
             }

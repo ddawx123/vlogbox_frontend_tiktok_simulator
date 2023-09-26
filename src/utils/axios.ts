@@ -1,11 +1,9 @@
 import axios from "axios"
 
 let http = axios.create({
-    baseURL: process.env.NODE_ENV === "production" ?
-        "https://tiktok.nicode.top:20005/api/" :
-        "http://localhost:8000/api/",
+    baseURL: process.env.NODE_ENV === "production" ? "http://10.44.100.1/api/" : "http://dev-vlogbox.dingplace.com/api/",
     withCredentials: false,
-    timeout: 8000,
+    timeout: 8000
 })
 
 http.interceptors.request.use(
